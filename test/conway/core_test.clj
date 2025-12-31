@@ -23,7 +23,9 @@
                                   ["O" " " " "]] 1 1)))
   (is (= 4 (core/count-neighbors [[" " "O" " "]
                                   [" " " " "O"]
-                                  ["O" "O" " "]] 1 1))))
+                                  ["O" "O" " "]] 1 1)))
+  (is (= 1 (core/count-neighbors [[" " "O"]
+                                  [" " " "]] 1 1))))
 
 (deftest t-count-neighbors-at-edge
   (is (= 0 (core/count-neighbors [[" " "O" " "]
@@ -83,3 +85,4 @@
         (core/tick [[" " " " " "]
                     ["O" "O" "O"]
                     [" " " " " "]]))))
+

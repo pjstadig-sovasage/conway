@@ -48,4 +48,6 @@
     @new-grid))
 
 (defn tick [grid]
-  grid)
+  (let [new-grid (step grid)]
+    (print-grid new-grid)
+    new-grid))
