@@ -46,3 +46,6 @@
       (vreset! new-grid (step-row new-grid grid @i))
       (vswap! i inc))
     @new-grid))
+
+(defn tick [grid]
+  grid)
