@@ -10,8 +10,8 @@
 (defn offset-from
   [grid row col]
   (fn [[x y]]
-    [(max (min (+ row x) (dec (count grid))) 0)
-     (max (min (+ col y) (dec (count (get grid row)))) 0)]))
+    [(mod (+ row x) (dec (count grid)))
+     (mod (+ col y) (dec (count (get grid row))))]))
 
 (defn get-neighbors
   [grid row col]
