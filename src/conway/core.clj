@@ -22,16 +22,21 @@
       (recur (inc i))))
   (flush))
 
+(defn examine-cell 
+  [grid row col]
+  (let [sum  (+ (get-in grid [(dec row) (dec col)])
+               (get-in grid [(dec row) col])
+               (get-in grid [(dec row) (inc col)])
+               (get-in grid [row (dec col)])
+               (get-in grid [row (inc col)])
+               (get-in grid [(inc row) (dec col)])
+               (get-in grid [(inc row) col])
+               (get-in grid [(inc row) (inc col)]))]
+    sum))
+
 (defn step
   [grid]
-  (let [sum  (+ (get-in grid [0 0])
-               (get-in grid [0 1])
-               (get-in grid [0 2])
-               (get-in grid [1 0])
-               (get-in grid [1 2])
-               (get-in grid [2 0])
-               (get-in grid [2 1])
-               (get-in grid [2 2]))]
+  (let [sum (examine-cell grid 1 1)]  
     (if (zero? (get-in grid [1 1]))
       (if (= sum 3)
         (assoc-in grid [1 1] 1)
