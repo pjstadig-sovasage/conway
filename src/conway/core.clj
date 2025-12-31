@@ -8,13 +8,14 @@
 (def offsets [[-1 -1] [-1 0] [-1 1] [0 -1] [0 1] [1 -1] [1 0] [1 1]])
 
 (defn offset-from
-  [row col]
+  [grid row col]
   (fn [[x y]]
-    [(max (min (+ row x) 2) 0) (max (min (+ col y) 2) 0)]))
+    [(max (min (+ row x) (dec (count grid))) 0)
+     (max (min (+ col y) (dec (count (get grid row)))) 0)]))
 
 (defn get-neighbors
   [grid row col]
-  (let [neighbors (disj (into #{} (map (offset-from row col)) offsets) [row col])]
+  (let [neighbors (disj (into #{} (map (offset-from grid row col)) offsets) [row col])]
     (for [[x y] neighbors]
       (get-in grid [x y]))))
 
@@ -51,3 +52,17 @@
   (let [new-grid (step grid)]
     (print-grid new-grid)
     new-grid))
+
+(defn new-grid
+  [rows cols]
+  (letfn [(new-row []
+            (vec (repeatedly cols #(rand-nth [" " "O"]))))]
+   (vec (repeatedly rows new-row))))
+
+(defn -main
+  [rows columns generations]
+  (let [grid (volatile! (new-grid (parse-long rows) (parse-long columns)))]
+    (print-grid @grid)
+    (dotimes [_ (parse-long generations)]
+      (vswap! grid tick)
+      (Thread/sleep 100))))
