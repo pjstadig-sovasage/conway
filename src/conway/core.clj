@@ -9,7 +9,11 @@
 
 (defn get-neighbors
   [grid row col]
-  (for [[x y] neighbors] (get-in grid [(+ row x) (+ col y)])))
+  (for [[x y] neighbors] (get-in grid [(mod (+ row x) 3) (mod (+ col y) 3)])))
 
 (defn count-neighbors [grid row col]
   (transduce (map {" " 0 "O" 1}) + 0 (get-neighbors grid row col)))
+
+(defn step [grid]
+  grid)
+
