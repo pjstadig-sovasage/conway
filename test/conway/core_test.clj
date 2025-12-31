@@ -26,47 +26,47 @@
                                   ["O" "O" " "]] 1 1))))
 
 (deftest t-count-neighbors-at-edge
-  (is (= 0 (core/count-neighbors [["O" " " " "]
+  (is (= 0 (core/count-neighbors [[" " "O" " "]
                                   [" " " " " "]
-                                  [" " " " " "]] 0 0)))
-  (is (= 1 (core/count-neighbors [["O" " " " "]
+                                  [" " " " " "]] 0 1)))
+  (is (= 1 (core/count-neighbors [[" " "O" " "]
                                   ["O" " " " "]
-                                  [" " " " " "]] 0 0)))
-  (is (= 3 (core/count-neighbors [["O" " " "O"]
-                                  ["O" " " " "]
-                                  ["O" " " " "]] 0 0)))
-  (is (= 4 (core/count-neighbors [[" " "O" " "]
-                                  [" " " " "O"]
-                                  ["O" "O" " "]] 0 0))))
+                                  [" " " " " "]] 0 1)))
+  (is (= 3 (core/count-neighbors [["O" "O" " "]
+                                  ["O" "O" " "]
+                                  [" " "O" " "]] 0 1)))
+  (is (= 1 (core/count-neighbors [[" " " " " "]
+                                  [" " "O" " "]
+                                  [" " " " " "]] 0 2))))
 
-(deftest t-step 
+(deftest t-step
   (is (= [[" " " " " "]
           [" " " " " "]
-          [" " " " " "]] 
+          [" " " " " "]]
          (core/step [[" " " " " "]
                      [" " "O" " "]
                      [" " " " " "]])))
-  (is (= [[" " " " " "]
+  (is (= [[" " "O" " "]
           [" " "O" " "]
-          [" " " " " "]] 
+          [" " " " " "]]
          (core/step [[" " "O" " "]
                      ["O" " " "O"]
                      [" " " " " "]])))
   (is (= [[" " "O" " "]
           [" " "O" " "]
-          [" " "O" " "]] 
+          [" " "O" " "]]
          (core/step [[" " " " " "]
                      ["O" "O" "O"]
                      [" " " " " "]])))
   (is (= [[" " " " " "]
           ["O" "O" "O"]
-          [" " " " " "]] 
+          [" " " " " "]]
          (core/step [[" " "O" " "]
                      [" " "O" " "]
                      [" " "O" " "]])))
   (is (= [["O" "O" " "]
           ["O" "O" " "]
-          [" " " " " "]] 
+          [" " " " " "]]
          (core/step [["O" "O" " "]
                      ["O" "O" " "]
                      [" " " " " "]]))))
