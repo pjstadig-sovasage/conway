@@ -22,7 +22,7 @@
       (recur (inc i))))
   (flush))
 
-(defn examine-cell 
+(defn examine-cell
   [grid row col]
   (let [sum  (+ (get-in grid [(dec row) (dec col)])
                (get-in grid [(dec row) col])
@@ -34,17 +34,36 @@
                (get-in grid [(inc row) (inc col)]))]
     sum))
 
+(defn update-cell
+  [grid row col sum]
+  (if (zero? (get-in grid [row col]))
+    (if (= sum 3)
+      (assoc-in grid [row col] 1)
+      grid)
+    (cond
+      (< sum 2) (assoc-in grid [row col] 0)
+      (> sum 3) (assoc-in grid [row col] 0)
+      :else grid)))
+
+(defn step-cell
+  [new-grid grid row col]
+  (update-cell new-grid row col (examine-cell grid row col)))
+
+(defn step-row
+  [new-grid grid row]
+  (reduce
+    (fn [new-grid col]
+      (step-cell new-grid grid row col))
+    new-grid
+    (range (count (get grid row)))))
+
 (defn step
   [grid]
-  (let [sum (examine-cell grid 1 1)]  
-    (if (zero? (get-in grid [1 1]))
-      (if (= sum 3)
-        (assoc-in grid [1 1] 1)
-        grid)
-      (cond
-        (< sum 2) (assoc-in grid [1 1] 0)
-        (> sum 3) (assoc-in grid [1 1] 0)
-        :else grid))))
+  (reduce
+    (fn [new-grid row]
+      (step-row new-grid grid row))
+    grid
+    (range (count grid))))
 
 (defn -main [& _args]
   (loop [grid [[0 0 0] [0 1 0] [0 0 0]]]
