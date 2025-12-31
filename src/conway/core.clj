@@ -24,7 +24,18 @@
 
 (defn step
   [grid]
-  grid)
+  (let [sum  (+ (get-in grid [0 0])
+                (get-in grid [0 1])
+                (get-in grid [0 2])
+                (get-in grid [1 0])
+                (get-in grid [1 2])
+                (get-in grid [2 0])
+                (get-in grid [2 1])
+                (get-in grid [2 2]))]
+    (cond
+      (< sum 2) (assoc-in grid [1 1] 0)
+      (> sum 3) (assoc-in grid [1 1] 0)
+      :else grid)))
 
 (defn -main [& _args]
   (loop [grid (vec (repeat 3 (vec (repeat 3 true))))]
