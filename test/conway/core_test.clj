@@ -25,7 +25,9 @@
                                   [" " " " "O"]
                                   ["O" "O" " "]] 1 1)))
   (is (= 1 (core/count-neighbors [[" " "O"]
-                                  [" " " "]] 1 1))))
+                                  [" " " "]] 1 1)))
+  (is (= 1 (core/count-neighbors [[" " "O" " " " "]
+                                  [" " " " " " " "]] 1 1))))
 
 (deftest t-count-neighbors-at-edge
   (is (= 0 (core/count-neighbors [[" " "O" " "]
